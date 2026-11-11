@@ -140,6 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cpp snake prototyping.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Tile_t.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Contants.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Tile_t.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
