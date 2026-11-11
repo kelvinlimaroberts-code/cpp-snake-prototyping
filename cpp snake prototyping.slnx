@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="cpp snake prototyping/cpp snake prototyping.vcxproj" />
+  <Project Path="cpp snake prototyping/cpp snake prototyping.vcxproj" Id="20fd47f9-027d-4d28-b777-3a330d092212" />
 </Solution>

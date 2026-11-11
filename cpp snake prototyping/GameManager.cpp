@@ -20,6 +20,16 @@ GameManager_t::GameManager_t()
         IdentifyAsItem(WALL, x, gridSize - 1);
     }
 
+    //place player
+    IdentifyAsItem(PLAYER_HEAD, (gridSize - 2) / 2, (gridSize - 2) / 2);
+
+    //place apple
+    RegenerateApple();
+}
+
+void GameManager_t::Update()
+{
+    
 }
 
 void GameManager_t::Render()
@@ -28,9 +38,22 @@ void GameManager_t::Render()
     {
         for (int y = 0; y < gridSize; y++)
         {
-
+            PrintItem(x, y);
         }
+        std::cout << '\n';
     }
+    std::cout << "\n\n\n";
+
+}
+
+bool GameManager_t::IsGameRunning()
+{
+    return gameRunning;
+}
+
+void GameManager_t::SetGameToRun(bool run)
+{
+    gameRunning = run;
 }
 
 GridItem GameManager_t::GetIdentityOfItem(int x, int y)
@@ -52,6 +75,11 @@ void GameManager_t::UnidntifyItem(int x, int y)
     {
         IdentifyAsItem(EMPTY, x, y);
     }
+}
+
+void GameManager_t::PrintItem(int x, int y)
+{
+    std::cout << mapGrid[x][y].GetDisplayValue();
 }
 
 void GameManager_t::GenerateRandomPos(int& x, int& y)
