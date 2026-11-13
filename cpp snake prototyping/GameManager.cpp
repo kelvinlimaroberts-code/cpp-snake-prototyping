@@ -63,7 +63,7 @@ GridItem GameManager_t::GetIdentityOfItem(int x, int y)
 
 void GameManager_t::IdentifyAsItem(GridItem item, int x, int y)
 {
-    if (mapGrid[x][ y].GetID() == GridItem::EMPTY)
+    if (mapGrid[x][y].GetID() == GridItem::EMPTY)
     {
         mapGrid[x][y].SetID(item);
     }

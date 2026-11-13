@@ -1,6 +1,6 @@
 #include "Tile_t.h"
 
-GridItem Tile_t::GetID()
+const GridItem& Tile_t::GetID() const 
 {
 	return id;
 }
@@ -30,7 +30,7 @@ void Tile_t::SetID(GridItem i)
 	}
 }
 
-char Tile_t::GetDisplayValue()
+const char Tile_t::GetDisplayValue() const
 {
 	return displayValue;
 }
