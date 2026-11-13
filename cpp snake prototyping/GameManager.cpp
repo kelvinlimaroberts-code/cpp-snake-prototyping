@@ -21,7 +21,7 @@ GameManager_t::GameManager_t()
     }
 
     //place player
-    IdentifyAsItem(PLAYER_HEAD, (gridSize - 2) / 2, (gridSize - 2) / 2);
+    IdentifyAsItem(SNAKE_HEAD, (gridSize - 2) / 2, (gridSize - 2) / 2);
 
     //place apple
     RegenerateApple();
@@ -46,15 +46,67 @@ void GameManager_t::Render()
 
 }
 
+void GameManager_t::InputKey()
+{
+    std::cin >> lastKeyPress;
+    DirectionValue desiredDir;
+    switch ((InputValue)lastKeyPress)
+    {
+    case INPUT_A:
+    case INPUT_a:
+        desiredDir = LEFT_DIR;
+        break;
+    case INPUT_D:
+    case INPUT_d:
+        desiredDir = RIGHT_DIR;
+        break;
+    case INPUT_S:
+    case INPUT_s:
+        desiredDir = DOWN_DIR;
+        break;
+    case INPUT_W:
+    case INPUT_w:
+        desiredDir = UP_DIR;
+        break;
+    default:
+        break;
+    }
+    switch (direction)
+    {
+    case GameManager_t::UP_DIR:
+        if (desiredDir != DOWN_DIR)
+        {
+            direction = desiredDir;
+        }
+        break;
+    case GameManager_t::LEFT_DIR:
+        if (desiredDir != RIGHT_DIR)
+        {
+            direction = desiredDir;
+        }
+        break;
+    case GameManager_t::RIGHT_DIR:
+        if (desiredDir != LEFT_DIR)
+        {
+            direction = desiredDir;
+        }
+        break;
+    case GameManager_t::DOWN_DIR:
+        if (desiredDir != UP_DIR)
+        {
+            direction = desiredDir;
+        }
+        break;
+    default:
+        break;
+    }
+}
+
 bool GameManager_t::IsGameRunning()
 {
     return gameRunning;
 }
 
-void GameManager_t::SetGameToRun(bool run)
-{
-    gameRunning = run;
-}
 
 GridItem GameManager_t::GetIdentityOfItem(int x, int y)
 {

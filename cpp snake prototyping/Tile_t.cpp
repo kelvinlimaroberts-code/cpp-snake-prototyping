@@ -19,11 +19,11 @@ void Tile_t::SetID(GridItem i)
 	case (APPLE):
 		displayValue = 'a';
 		break;
-	case (PLAYER_HEAD):
-		displayValue = 'P';
+	case (SNAKE_HEAD):
+		displayValue = 'S';
 		break;
-	case (PLAYER_BODY):
-		displayValue = 'p';
+	case (SNAKE_BODY):
+		displayValue = 's';
 		break;
 	default:
 		displayValue = 'x';
