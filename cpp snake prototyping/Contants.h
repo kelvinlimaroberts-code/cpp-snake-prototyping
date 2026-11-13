@@ -1,4 +1,12 @@
 #pragma once
+//common data structures
+struct short2
+{
+	short x;
+	short y;
+};
+
+
 //MAP CONSTANTS
 constexpr short tileSize = 10;
 

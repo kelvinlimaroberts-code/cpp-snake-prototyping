@@ -34,3 +34,26 @@ const char Tile_t::GetDisplayValue() const
 {
 	return displayValue;
 }
+
+Segment_t::Segment_t()
+{
+	SetID(SNAKE_BODY);
+}
+
+void Segment_t::SetPos(short2 newPos)
+{
+	prevPos = pos;
+	pos = newPos;
+}
+
+const short2 Segment_t::GetPos() const
+{
+	return pos;
+}
+
+const short2 Segment_t::GetPrev() const
+{
+	return prevPos;
+}
+
+

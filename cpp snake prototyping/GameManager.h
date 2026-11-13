@@ -3,6 +3,7 @@
 
 enum InputValue
 {
+	INPUT_NONE,
 	INPUT_A = 65,
 	INPUT_D = 68,
 	INPUT_S = 83,
@@ -30,19 +31,20 @@ private:
 	bool appleEaten = true;
 	//inputs
 	char lastKeyPress = ' ';
-	InputValue lastValidInput = INPUT_W;
-	enum DirectionValue {UP_DIR, LEFT_DIR, RIGHT_DIR, DOWN_DIR};
-	DirectionValue direction = UP_DIR;
+	InputValue lastValidInput = INPUT_NONE;
+	enum DirectionValue {NO_DIR, UP_DIR, LEFT_DIR, RIGHT_DIR, DOWN_DIR};
+	DirectionValue direction = NO_DIR;
 	//player
+	Segment_t segments[gridSize * gridSize];
+	int amountSegments = 0;
 
-
-
-	GridItem GetIdentityOfItem(short x, short y);
-	void IdentifyAsItem(GridItem item, short x, short y);
-	void UnidntifyItem(short x, short y);
-	void PrintItem(short x, short y);
-	void GenerateRandomPos(short& x, short& y);
+	GridItem GetIdentityOfItem(short2);
+	void IdentifyAsItem(GridItem item, short2);
+	void UnidntifyItem(short2);
+	void PrintItem(short2);
+	void GenerateRandomPos(short2&);
 	void RegenerateApple();
-	void PlacePlayer(short x, short y);
+	void MoveSnake(short2);
+	bool ValidSnakeMovement(short2&);
 };
 
