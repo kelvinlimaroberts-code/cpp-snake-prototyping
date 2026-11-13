@@ -37,12 +37,12 @@ private:
 
 
 
-	GridItem GetIdentityOfItem(int x, int y);
-	void IdentifyAsItem(GridItem item, int x, int y);
-	void UnidntifyItem(int x, int y);
-	void PrintItem(int x, int y);
-	void GenerateRandomPos(int& x, int& y);
+	GridItem GetIdentityOfItem(short x, short y);
+	void IdentifyAsItem(GridItem item, short x, short y);
+	void UnidntifyItem(short x, short y);
+	void PrintItem(short x, short y);
+	void GenerateRandomPos(short& x, short& y);
 	void RegenerateApple();
-	
+	void PlacePlayer(short x, short y);
 };
 

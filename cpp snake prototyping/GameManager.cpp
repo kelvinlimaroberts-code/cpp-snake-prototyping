@@ -9,12 +9,12 @@ GameManager_t::GameManager_t()
     //identify GRID items ON INIT
   
     //IDENTIFY walls
-    for (int y = 0; y < gridSize; y++) //fill first and last rows as walls (y)
+    for (short y = 0; y < gridSize; y++) //fill first and last rows as walls (y)
     {
         IdentifyAsItem(WALL, 0, y);
         IdentifyAsItem(WALL, gridSize - 1, y);
     }
-    for (int x = 1; x < gridSize; x++) //fill first and last columns as walls (x)
+    for (short x = 1; x < gridSize; x++) //fill first and last columns as walls (x)
     {
         IdentifyAsItem(WALL, x, 0);
         IdentifyAsItem(WALL, x, gridSize - 1);
@@ -34,9 +34,9 @@ void GameManager_t::Update()
 
 void GameManager_t::Render()
 {
-    for (int x = 0; x < gridSize; x++)
+    for (short x = 0; x < gridSize; x++)
     {
-        for (int y = 0; y < gridSize; y++)
+        for (short y = 0; y < gridSize; y++)
         {
             PrintItem(x, y);
         }
@@ -108,12 +108,12 @@ bool GameManager_t::IsGameRunning()
 }
 
 
-GridItem GameManager_t::GetIdentityOfItem(int x, int y)
+GridItem GameManager_t::GetIdentityOfItem(short x, short y)
 {
     return mapGrid[x][y].GetID();
 }
 
-void GameManager_t::IdentifyAsItem(GridItem item, int x, int y)
+void GameManager_t::IdentifyAsItem(GridItem item, short x, short y)
 {
     if (mapGrid[x][y].GetID() == GridItem::EMPTY)
     {
@@ -121,7 +121,7 @@ void GameManager_t::IdentifyAsItem(GridItem item, int x, int y)
     }
 }
 
-void GameManager_t::UnidntifyItem(int x, int y)
+void GameManager_t::UnidntifyItem(short x, short y)
 {
     if (mapGrid[x][ y].GetID() != GridItem::WALL)
     {
@@ -129,12 +129,12 @@ void GameManager_t::UnidntifyItem(int x, int y)
     }
 }
 
-void GameManager_t::PrintItem(int x, int y)
+void GameManager_t::PrintItem(short x, short y)
 {
     std::cout << mapGrid[x][y].GetDisplayValue();
 }
 
-void GameManager_t::GenerateRandomPos(int& x, int& y)
+void GameManager_t::GenerateRandomPos(short& x, short& y)
 {
     //return x and y as a value between 1 and gridSize-1
     x = (rand() % gridSize - 1) + 1;
@@ -146,8 +146,8 @@ void GameManager_t::RegenerateApple()
     if (appleEaten)
     {
         appleEaten = false;
-        int appleX = 1;
-        int appleY = 1;
+        short appleX = 1;
+        short appleY = 1;
         do
         {
             GenerateRandomPos(appleX, appleY);
