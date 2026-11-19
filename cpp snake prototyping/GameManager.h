@@ -23,10 +23,11 @@ public:
 	void Update();
 	void Render();
 	void InputKey();
-	bool IsGameRunning();
+	bool IsSnakeAlive();
+	void OutputDeathMessage();
 private:
 	//map
-	bool gameRunning = true;
+	bool snakeAlive = true;
 	Tile_t mapGrid[gridSize][gridSize];
 	bool appleEaten = true;
 	//inputs
@@ -36,7 +37,8 @@ private:
 	DirectionValue direction = NO_DIR;
 	//player
 	Segment_t segments[gridSize * gridSize];
-	int amountSegments = 0;
+	unsigned amountSegments = 0;
+	unsigned score = 0;
 
 	GridItem GetIdentityOfItem(short2);
 	void IdentifyAsItem(GridItem item, short2);

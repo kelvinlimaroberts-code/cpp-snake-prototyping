@@ -8,12 +8,13 @@ int main()
     //init
     GameManager_t* gameManager = new GameManager_t;
 
-    while (gameManager->IsGameRunning())
+    while (gameManager->IsSnakeAlive())
     { 
         gameManager->Update();
         gameManager->Render();
         gameManager->InputKey();
     }
+    gameManager->OutputDeathMessage();
 
 
 

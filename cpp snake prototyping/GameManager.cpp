@@ -53,7 +53,7 @@ void GameManager_t::Render()
 void GameManager_t::InputKey()
 {
     std::cin >> lastKeyPress;
-    DirectionValue desiredDir = NO_DIR;
+    DirectionValue desiredDir = direction;
     switch ((InputValue)lastKeyPress)
     {
     case INPUT_A:
@@ -107,9 +107,14 @@ void GameManager_t::InputKey()
     }
 }
 
-bool GameManager_t::IsGameRunning()
+bool GameManager_t::IsSnakeAlive()
 {
-    return gameRunning;
+    return snakeAlive;
+}
+
+void GameManager_t::OutputDeathMessage()
+{
+    std::cout << "you died. rip bozo. score = " << score;
 }
 
 
@@ -177,10 +182,10 @@ void GameManager_t::MoveSnake(short2 pos)
     UnidntifyItem(segments[amountSegments].GetPrev());  //deregister snake tail tip
 }
 
-bool GameManager_t::ValidSnakeMovement(short2&desiredNewPos)
+bool GameManager_t::ValidSnakeMovement(short2& desiredNewPos)
 {
     if (direction != NO_DIR)
-    {
+    {   
         desiredNewPos = segments[0].GetPos();
         switch (direction)
         {
@@ -199,7 +204,14 @@ bool GameManager_t::ValidSnakeMovement(short2&desiredNewPos)
         default:
             break;
         }
-        return true;
+
+        //now check collisions between things
+        if (desiredNewPos.x == 0 || desiredNewPos.y == 0 || desiredNewPos.x == gridSize || desiredNewPos.y == gridSize)
+        {
+            snakeAlive = false;
+        }
+
+        return snakeAlive;
     }
     else
     {
