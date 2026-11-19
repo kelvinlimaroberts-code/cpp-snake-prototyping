@@ -46,7 +46,7 @@ private:
 	void PrintItem(short2);
 	void GenerateRandomPos(short2&);
 	void RegenerateApple();
-	void MoveSnake(short2);
+	void MoveSnake(const short2&);
 	bool ValidSnakeMovement(short2&);
 };
 

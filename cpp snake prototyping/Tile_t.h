@@ -20,7 +20,7 @@ class Segment_t : public Tile_t
 {
 public:
 	Segment_t();
-	void SetPos(short2 newPos);
+	void SetPos(const short2& newPos);
 	const short2 GetPos() const;
 	const short2 GetPrev() const;
 

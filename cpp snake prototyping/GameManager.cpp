@@ -135,7 +135,7 @@ void GameManager_t::UnidntifyItem(short2 pos)
 {
     if (mapGrid[pos.x][pos.y].GetID() != GridItem::WALL)
     {
-        IdentifyAsItem(EMPTY, pos);
+        mapGrid[pos.x][pos.y].SetID(EMPTY);
     }
 }
 
@@ -165,7 +165,7 @@ void GameManager_t::RegenerateApple()
     }
 }
 
-void GameManager_t::MoveSnake(short2 pos)
+void GameManager_t::MoveSnake(const short2& pos)
 {
     //work from head down
     segments[0].SetPos(pos);
@@ -175,9 +175,9 @@ void GameManager_t::MoveSnake(short2 pos)
         UnidntifyItem(segments[0].GetPrev());               //deregister previous head position
         IdentifyAsItem(SNAKE_BODY, segments[0].GetPrev());  //replace previous head with body
     }
-    for (short i = 1; i < amountSegments; i++)
+    for (short i = 0; i < amountSegments; i++)
     {
-        segments[i].SetPos(segments[i - 1].GetPrev());
+        segments[i+1].SetPos(segments[i].GetPrev());
     }
     UnidntifyItem(segments[amountSegments].GetPrev());  //deregister snake tail tip
 }
@@ -206,11 +206,22 @@ bool GameManager_t::ValidSnakeMovement(short2& desiredNewPos)
         }
 
         //now check collisions between things
-        if (desiredNewPos.x == 0 || desiredNewPos.y == 0 || desiredNewPos.x == gridSize || desiredNewPos.y == gridSize)
+        //check wall collision
+        switch (GetIdentityOfItem(desiredNewPos))
         {
+        case WALL:
             snakeAlive = false;
+            break;
+        case APPLE:
+            UnidntifyItem(desiredNewPos);
+            amountSegments++;
+            appleEaten = true;
+            RegenerateApple();
+            break;
+        case SNAKE_BODY:
+            snakeAlive = false;
+            break;
         }
-
         return snakeAlive;
     }
     else

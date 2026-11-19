@@ -40,7 +40,7 @@ Segment_t::Segment_t()
 	SetID(SNAKE_BODY);
 }
 
-void Segment_t::SetPos(short2 newPos)
+void Segment_t::SetPos(const short2& newPos)
 {
 	prevPos = pos;
 	pos = newPos;
