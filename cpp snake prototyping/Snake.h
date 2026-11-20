@@ -1,5 +1,5 @@
 #pragma once
-#include "Tile_t.h"
+#include "Map_t.h"
 
 //https://www.geeksforgeeks.org/cpp/cpp-linked-list/
 //https://www.geeksforgeeks.org/cpp/operator-overloading-cpp/
@@ -9,7 +9,7 @@ class Snake_t
 public:
 	Snake_t();
 	~Snake_t();
-	void MoveSnake(const short2&);
+	void MoveSnake(const short2& pos, Map_t& m);
 	bool ValidSnakeMovement(short2&);
 	int GetScore();
 	bool& HasLife();

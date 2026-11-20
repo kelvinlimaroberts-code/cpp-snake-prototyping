@@ -141,30 +141,11 @@ void GameManager_t::FactorCollisions(short2 nextPos)
     }
 }
 
-GridItem GameManager_t::GetIdentityOfItem(short2 pos)
-{
-    return mapGrid[pos.x][pos.y].GetID();
-}
 
-void GameManager_t::IdentifyAsItem(GridItem item, short2 pos)
-{
-    if (mapGrid[pos.x][pos.y].GetID() == GridItem::EMPTY)
-    {
-        mapGrid[pos.x][pos.y].SetID(item);
-    }
-}
-
-void GameManager_t::UnidntifyItem(short2 pos)
-{
-    if (mapGrid[pos.x][pos.y].GetID() != GridItem::WALL)
-    {
-        mapGrid[pos.x][pos.y].SetID(EMPTY);
-    }
-}
 
 void GameManager_t::PrintItem(short2 pos)
 {
-    std::cout << mapGrid[pos.x][pos.y].GetDisplayValue();
+    std::cout << map.GetDisplayValueAt(pos);
 }
 
 void GameManager_t::GenerateRandomPos(short2& pos)
@@ -176,7 +157,7 @@ void GameManager_t::GenerateRandomPos(short2& pos)
 
 void GameManager_t::RegenerateApple()
 {
-    if (appleEaten)
+    if (map.appleEaten)
     {
         appleEaten = false;
         short2 applePos = { 1,1 };

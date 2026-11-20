@@ -31,7 +31,7 @@ Snake_t& Snake_t::operator--()
     return *this;
 }
 
-void Snake_t::MoveSnake(const short2& pos)
+void Snake_t::MoveSnake(const short2& pos, Map_t& m)
 {
     //work from head down
     segments[0].SetPos(pos);

@@ -1,5 +1,6 @@
 #pragma once
 #include "Snake.h"
+#include "Map_t.h"
 
 enum InputValue
 {
@@ -26,22 +27,18 @@ public:
 	void OutputDeathMessage();
 	bool IsGameRunning();
 private:
+	void FactorCollisions(short2 nextPos);
+	void PrintItem(short2);
+	void GenerateRandomPos(short2&);
+	void RegenerateApple();
+
 	//map
-	Tile_t mapGrid[gridSize][gridSize];
-	bool appleEaten = true;
+	Map_t map;
 	//inputs
 	char lastKeyPress = ' ';
 	InputValue lastValidInput = INPUT_NONE;
 	//player
 	Snake_t player;
-	
-	void FactorCollisions(short2 nextPos);
-	GridItem GetIdentityOfItem(short2);
-	void IdentifyAsItem(GridItem item, short2);
-	void UnidntifyItem(short2);
-	void PrintItem(short2);
-	void GenerateRandomPos(short2&);
-	void RegenerateApple();
 
 };
 
