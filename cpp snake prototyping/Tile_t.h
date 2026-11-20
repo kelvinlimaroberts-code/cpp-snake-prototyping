@@ -24,6 +24,8 @@ public:
 	const short2 GetPos() const;
 	const short2 GetPrev() const;
 
+	Segment_t* pPrevSegment = nullptr;
+	Segment_t* pNextSegment = nullptr;
 private:
 	short2 pos = { 0,0 };
 	short2 prevPos = pos;
