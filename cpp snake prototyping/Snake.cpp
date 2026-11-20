@@ -8,21 +8,27 @@ Snake_t::Snake_t()
 
 Snake_t::~Snake_t()
 {
-	delete mpHead;
+    while (GetTail().pPrevSegment != nullptr) //check if the segment is the head
+    {
+        --*this;   //delete everything in linked list
+    }
+	delete mpHead;      //delete head
 	mpHead = nullptr;
 }
 
-void Snake_t::operator++()
+Snake_t& Snake_t::operator++()
 {
 	Segment_t& tail = GetTail();
 	tail.pNextSegment = new Segment_t(tail);
+    return *this;
 }
 
-void Snake_t::operator--()
+Snake_t& Snake_t::operator--()
 {
 	Segment_t* penultimatePiece = GetTail().pPrevSegment;
 	delete penultimatePiece->pNextSegment;
 	penultimatePiece->pNextSegment = nullptr;
+    return *this;
 }
 
 void Snake_t::MoveSnake(const short2& pos)
@@ -65,24 +71,7 @@ bool Snake_t::ValidSnakeMovement(short2& desiredNewPos)
             break;
         }
 
-        //now check collisions between things
-        //check wall collision
-        switch (GetIdentityOfItem(desiredNewPos))
-        {
-        case WALL:
-            snakeAlive = false;
-            break;
-        case APPLE:
-            UnidntifyItem(desiredNewPos);
-            amountSegments++;
-            appleEaten = true;
-            RegenerateApple();
-            break;
-        case SNAKE_BODY:
-            snakeAlive = false;
-            break;
-        }
-        return snakeAlive;
+        return true;
     }
     else
     {
@@ -95,7 +84,7 @@ int Snake_t::GetScore()
     return score;
 }
 
-bool Snake_t::IsSnakeAlive()
+bool& Snake_t::HasLife()
 {
     return snakeAlive;
 }

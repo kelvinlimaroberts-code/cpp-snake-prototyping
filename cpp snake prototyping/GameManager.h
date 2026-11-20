@@ -35,12 +35,13 @@ private:
 	//player
 	Snake_t player;
 	
-
+	void FactorCollisions(short2 nextPos);
 	GridItem GetIdentityOfItem(short2);
 	void IdentifyAsItem(GridItem item, short2);
 	void UnidntifyItem(short2);
 	void PrintItem(short2);
 	void GenerateRandomPos(short2&);
 	void RegenerateApple();
+
 };
 

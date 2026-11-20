@@ -116,9 +116,30 @@ void GameManager_t::OutputDeathMessage()
 
 bool GameManager_t::IsGameRunning()
 {
-    return player.IsSnakeAlive();
+    return player.HasLife();
 }
 
+
+void GameManager_t::FactorCollisions(short2 nextPos)
+{
+    //now check collisions between things
+        //check wall collision
+    switch (GetIdentityOfItem(nextPos))
+    {
+    case WALL:
+        player.HasLife() = false;
+        break;
+    case APPLE:
+        UnidntifyItem(nextPos);
+        ++player;
+        appleEaten = true;
+        RegenerateApple();
+        break;
+    case SNAKE_BODY:
+        player.HasLife() = false;
+        break;
+    }
+}
 
 GridItem GameManager_t::GetIdentityOfItem(short2 pos)
 {
