@@ -11,17 +11,17 @@ GameManager_t::GameManager_t()
     //IDENTIFY walls
     for (short y = 0; y < gridSize; y++) //fill first and last rows as walls (y)
     {
-        IdentifyAsItem(WALL, { 0, y });
-        IdentifyAsItem(WALL, { gridSize - 1, y });
+        map.IdentifyAsItem(WALL, { 0, y });
+        map.IdentifyAsItem(WALL, { gridSize - 1, y });
     }
     for (short x = 1; x < gridSize; x++) //fill first and last columns as walls (x)
     {
-        IdentifyAsItem(WALL, { x, 0 });
-        IdentifyAsItem(WALL, { x, gridSize - 1 });
+        map.IdentifyAsItem(WALL, { x, 0 });
+        map.IdentifyAsItem(WALL, { x, gridSize - 1 });
     }
 
     //place player
-    player.MoveSnake({ (gridSize - 2) / 2, (gridSize - 2) / 2 });
+    player.MoveSnake({ (gridSize - 2) / 2, (gridSize - 2) / 2 }, map);
 
     //place apple
     RegenerateApple();
@@ -32,7 +32,7 @@ void GameManager_t::Update()
     short2 nextPos = { 0,0 };
     if (player.ValidSnakeMovement(nextPos))
     {
-        player.MoveSnake(nextPos);
+        player.MoveSnake(nextPos, map);
     }
 }
 
@@ -124,15 +124,15 @@ void GameManager_t::FactorCollisions(short2 nextPos)
 {
     //now check collisions between things
         //check wall collision
-    switch (GetIdentityOfItem(nextPos))
+    switch (map.GetIdentityOfItem(nextPos))
     {
     case WALL:
         player.HasLife() = false;
         break;
     case APPLE:
-        UnidntifyItem(nextPos);
+        map.UnidentifyItem(nextPos);
         ++player;
-        appleEaten = true;
+        map.AppleEaten() = true;
         RegenerateApple();
         break;
     case SNAKE_BODY:
@@ -157,15 +157,15 @@ void GameManager_t::GenerateRandomPos(short2& pos)
 
 void GameManager_t::RegenerateApple()
 {
-    if (map.appleEaten)
+    if (map.AppleEaten())
     {
-        appleEaten = false;
+        map.AppleEaten() = false;
         short2 applePos = { 1,1 };
         do
         {
             GenerateRandomPos(applePos);
-        } while (GetIdentityOfItem(applePos) != GridItem::EMPTY);  // make sure that the desired new position for the apple is in an empty spot
-        IdentifyAsItem(APPLE, applePos);
+        } while (map.GetIdentityOfItem(applePos) != GridItem::EMPTY);  // make sure that the desired new position for the apple is in an empty spot
+        map.IdentifyAsItem(APPLE, applePos);
     }
 }
 

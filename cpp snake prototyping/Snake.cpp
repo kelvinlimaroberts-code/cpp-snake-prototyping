@@ -33,26 +33,28 @@ Snake_t& Snake_t::operator--()
 
 void Snake_t::MoveSnake(const short2& pos, Map_t& m)
 {
-    //work from head down
-    segments[0].SetPos(pos);
-    IdentifyAsItem(SNAKE_HEAD, pos);                    //register head
-    if (amountSegments > 0)
+    //work from head down the linked list
+    mpHead->SetPos(pos);                                //object update head pos
+    m.IdentifyAsItem(SNAKE_HEAD, pos);                  //map register head
+    if (mpHead->pNextSegment != nullptr)                //if its not just the head
     {
-        UnidntifyItem(segments[0].GetPrevPos());               //deregister previous head position
-        IdentifyAsItem(SNAKE_BODY, segments[0].GetPrevPos());  //replace previous head with body
+        m.UnidentifyItem(mpHead->GetPrevPos());         //map deregister previous head position
+        m.IdentifyAsItem(SNAKE_BODY, mpHead->GetPrevPos());//map register previous position as snake body
     }
-    for (short i = 0; i < amountSegments; i++)
+    Segment_t& index = *mpHead;
+    while (index.pNextSegment != nullptr)               //for the rest of the segments
     {
-        segments[i + 1].SetPos(segments[i].GetPrevPos());
+        //update the position of the next one with the previous position of the current selected
+        index.pNextSegment->SetPos(index.GetPrevPos());
     }
-    UnidntifyItem(segments[amountSegments].GetPrevPos());  //deregister snake tail tip
+    m.UnidentifyItem(index.GetPrevPos());               //map deregister snake tail tip
 }
 
 bool Snake_t::ValidSnakeMovement(short2& desiredNewPos)
 {
     if (direction != NO_DIR)
     {
-        desiredNewPos = segments[0].GetPos();
+        desiredNewPos = mpHead->GetPos();
         switch (direction)
         {
         case UP_DIR:

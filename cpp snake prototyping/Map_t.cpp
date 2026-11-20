@@ -13,7 +13,7 @@ void Map_t::IdentifyAsItem(GridItem item, short2 pos)
     }
 }
 
-void Map_t::UnidntifyItem(short2 pos)
+void Map_t::UnidentifyItem(short2 pos)
 {
     if (mapGrid[pos.x][pos.y].GetID() != GridItem::WALL)
     {
