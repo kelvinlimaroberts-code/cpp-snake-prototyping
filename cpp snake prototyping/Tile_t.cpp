@@ -40,6 +40,12 @@ Segment_t::Segment_t()
 	SetID(SNAKE_BODY);
 }
 
+Segment_t::Segment_t(Segment_t* prevSeg)
+{
+	pPrevSegment = prevSeg;
+	SetID(SNAKE_BODY);
+}
+
 
 
 void Segment_t::SetPos(const short2& newPos)
@@ -53,7 +59,7 @@ const short2 Segment_t::GetPos() const
 	return pos;
 }
 
-const short2 Segment_t::GetPrev() const
+const short2 Segment_t::GetPrevPos() const
 {
 	return prevPos;
 }

@@ -20,9 +20,10 @@ class Segment_t : public Tile_t
 {
 public:
 	Segment_t();
+	Segment_t(Segment_t* prevSeg);
 	void SetPos(const short2& newPos);
 	const short2 GetPos() const;
-	const short2 GetPrev() const;
+	const short2 GetPrevPos() const;
 
 	Segment_t* pPrevSegment = nullptr;
 	Segment_t* pNextSegment = nullptr;

@@ -172,14 +172,14 @@ void GameManager_t::MoveSnake(const short2& pos)
     IdentifyAsItem(SNAKE_HEAD, pos);                    //register head
     if (amountSegments > 0)
     {
-        UnidntifyItem(segments[0].GetPrev());               //deregister previous head position
-        IdentifyAsItem(SNAKE_BODY, segments[0].GetPrev());  //replace previous head with body
+        UnidntifyItem(segments[0].GetPrevPos());               //deregister previous head position
+        IdentifyAsItem(SNAKE_BODY, segments[0].GetPrevPos());  //replace previous head with body
     }
     for (short i = 0; i < amountSegments; i++)
     {
-        segments[i+1].SetPos(segments[i].GetPrev());
+        segments[i+1].SetPos(segments[i].GetPrevPos());
     }
-    UnidntifyItem(segments[amountSegments].GetPrev());  //deregister snake tail tip
+    UnidntifyItem(segments[amountSegments].GetPrevPos());  //deregister snake tail tip
 }
 
 bool GameManager_t::ValidSnakeMovement(short2& desiredNewPos)

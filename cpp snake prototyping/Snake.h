@@ -12,7 +12,7 @@ public:
 	void operator++();
 	void operator--();
 private:
-	void GetTail(Segment_t* tail);
+	Segment_t& GetTail();
 	Segment_t* mpHead = nullptr;
 
 	
