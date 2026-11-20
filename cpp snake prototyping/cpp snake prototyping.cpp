@@ -8,7 +8,7 @@ int main()
     //init
     GameManager_t* gameManager = new GameManager_t;
 
-    while (gameManager->IsSnakeAlive())
+    while (gameManager->IsGameRunning())
     { 
         gameManager->Update();
         gameManager->Render();

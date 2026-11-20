@@ -25,7 +25,85 @@ void Snake_t::operator--()
 	penultimatePiece->pNextSegment = nullptr;
 }
 
+void Snake_t::MoveSnake(const short2& pos)
+{
+    //work from head down
+    segments[0].SetPos(pos);
+    IdentifyAsItem(SNAKE_HEAD, pos);                    //register head
+    if (amountSegments > 0)
+    {
+        UnidntifyItem(segments[0].GetPrevPos());               //deregister previous head position
+        IdentifyAsItem(SNAKE_BODY, segments[0].GetPrevPos());  //replace previous head with body
+    }
+    for (short i = 0; i < amountSegments; i++)
+    {
+        segments[i + 1].SetPos(segments[i].GetPrevPos());
+    }
+    UnidntifyItem(segments[amountSegments].GetPrevPos());  //deregister snake tail tip
+}
 
+bool Snake_t::ValidSnakeMovement(short2& desiredNewPos)
+{
+    if (direction != NO_DIR)
+    {
+        desiredNewPos = segments[0].GetPos();
+        switch (direction)
+        {
+        case UP_DIR:
+            desiredNewPos.x--;
+            break;
+        case LEFT_DIR:
+            desiredNewPos.y--;
+            break;
+        case RIGHT_DIR:
+            desiredNewPos.y++;
+            break;
+        case DOWN_DIR:
+            desiredNewPos.x++;
+            break;
+        default:
+            break;
+        }
+
+        //now check collisions between things
+        //check wall collision
+        switch (GetIdentityOfItem(desiredNewPos))
+        {
+        case WALL:
+            snakeAlive = false;
+            break;
+        case APPLE:
+            UnidntifyItem(desiredNewPos);
+            amountSegments++;
+            appleEaten = true;
+            RegenerateApple();
+            break;
+        case SNAKE_BODY:
+            snakeAlive = false;
+            break;
+        }
+        return snakeAlive;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+int Snake_t::GetScore()
+{
+    return score;
+}
+
+bool Snake_t::IsSnakeAlive()
+{
+    return snakeAlive;
+}
+
+DirectionValue& Snake_t::GetDirection()
+{
+    return direction;
+}
 
 Segment_t& Snake_t::GetTail()
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "Tile_t.h"
+#include "Snake.h"
 
 enum InputValue
 {
@@ -23,22 +23,18 @@ public:
 	void Update();
 	void Render();
 	void InputKey();
-	bool IsSnakeAlive();
 	void OutputDeathMessage();
+	bool IsGameRunning();
 private:
 	//map
-	bool snakeAlive = true;
 	Tile_t mapGrid[gridSize][gridSize];
 	bool appleEaten = true;
 	//inputs
 	char lastKeyPress = ' ';
 	InputValue lastValidInput = INPUT_NONE;
-	enum DirectionValue {NO_DIR, UP_DIR, LEFT_DIR, RIGHT_DIR, DOWN_DIR};
-	DirectionValue direction = NO_DIR;
 	//player
-	Segment_t segments[gridSize * gridSize];
-	unsigned amountSegments = 0;
-	unsigned score = 0;
+	Snake_t player;
+	
 
 	GridItem GetIdentityOfItem(short2);
 	void IdentifyAsItem(GridItem item, short2);
@@ -46,7 +42,5 @@ private:
 	void PrintItem(short2);
 	void GenerateRandomPos(short2&);
 	void RegenerateApple();
-	void MoveSnake(const short2&);
-	bool ValidSnakeMovement(short2&);
 };
 

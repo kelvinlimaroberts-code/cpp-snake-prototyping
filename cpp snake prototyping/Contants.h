@@ -16,5 +16,9 @@ constexpr short gridSize = 22;
 //TILE CONSTANTS
 enum GridItem { EMPTY, WALL, APPLE, SNAKE_HEAD, SNAKE_BODY };
 
+//direction
+enum DirectionValue { NO_DIR, UP_DIR, LEFT_DIR, RIGHT_DIR, DOWN_DIR };
+
+
 
 

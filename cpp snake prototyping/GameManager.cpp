@@ -21,7 +21,7 @@ GameManager_t::GameManager_t()
     }
 
     //place player
-    MoveSnake({ (gridSize - 2) / 2, (gridSize - 2) / 2 });
+    player.MoveSnake({ (gridSize - 2) / 2, (gridSize - 2) / 2 });
 
     //place apple
     RegenerateApple();
@@ -30,9 +30,9 @@ GameManager_t::GameManager_t()
 void GameManager_t::Update()
 {
     short2 nextPos = { 0,0 };
-    if (ValidSnakeMovement(nextPos))
+    if (player.ValidSnakeMovement(nextPos))
     {
-        MoveSnake(nextPos);
+        player.MoveSnake(nextPos);
     }
 }
 
@@ -53,7 +53,7 @@ void GameManager_t::Render()
 void GameManager_t::InputKey()
 {
     std::cin >> lastKeyPress;
-    DirectionValue desiredDir = direction;
+    DirectionValue desiredDir = player.GetDirection();
     switch ((InputValue)lastKeyPress)
     {
     case INPUT_A:
@@ -75,46 +75,48 @@ void GameManager_t::InputKey()
     default:
         break;
     }
-    switch (direction)
+    switch (player.GetDirection())
     {
-    case GameManager_t::UP_DIR:
+    case UP_DIR:
         if (desiredDir != DOWN_DIR)
         {
-            direction = desiredDir;
+            player.GetDirection() = desiredDir;
         }
         break;
-    case GameManager_t::LEFT_DIR:
+    case LEFT_DIR:
         if (desiredDir != RIGHT_DIR)
         {
-            direction = desiredDir;
+            player.GetDirection() = desiredDir;
         }
         break;
-    case GameManager_t::RIGHT_DIR:
+    case RIGHT_DIR:
         if (desiredDir != LEFT_DIR)
         {
-            direction = desiredDir;
+            player.GetDirection() = desiredDir;
         }
         break;
-    case GameManager_t::DOWN_DIR:
+    case DOWN_DIR:
         if (desiredDir != UP_DIR)
         {
-            direction = desiredDir;
+            player.GetDirection() = desiredDir;
         }
         break;
     default:
-        direction = desiredDir;
+        player.GetDirection() = desiredDir;
         break;
     }
 }
 
-bool GameManager_t::IsSnakeAlive()
-{
-    return snakeAlive;
-}
+
 
 void GameManager_t::OutputDeathMessage()
 {
-    std::cout << "you died. rip bozo. score = " << score;
+    std::cout << "you died. rip bozo. score = " << player.GetScore();
+}
+
+bool GameManager_t::IsGameRunning()
+{
+    return player.IsSnakeAlive();
 }
 
 
@@ -165,70 +167,7 @@ void GameManager_t::RegenerateApple()
     }
 }
 
-void GameManager_t::MoveSnake(const short2& pos)
-{
-    //work from head down
-    segments[0].SetPos(pos);
-    IdentifyAsItem(SNAKE_HEAD, pos);                    //register head
-    if (amountSegments > 0)
-    {
-        UnidntifyItem(segments[0].GetPrevPos());               //deregister previous head position
-        IdentifyAsItem(SNAKE_BODY, segments[0].GetPrevPos());  //replace previous head with body
-    }
-    for (short i = 0; i < amountSegments; i++)
-    {
-        segments[i+1].SetPos(segments[i].GetPrevPos());
-    }
-    UnidntifyItem(segments[amountSegments].GetPrevPos());  //deregister snake tail tip
-}
 
-bool GameManager_t::ValidSnakeMovement(short2& desiredNewPos)
-{
-    if (direction != NO_DIR)
-    {   
-        desiredNewPos = segments[0].GetPos();
-        switch (direction)
-        {
-        case GameManager_t::UP_DIR:
-            desiredNewPos.x--;
-            break;
-        case GameManager_t::LEFT_DIR:
-            desiredNewPos.y--;
-            break;
-        case GameManager_t::RIGHT_DIR:
-            desiredNewPos.y++;
-            break;
-        case GameManager_t::DOWN_DIR:
-            desiredNewPos.x++;
-            break;
-        default:
-            break;
-        }
-
-        //now check collisions between things
-        //check wall collision
-        switch (GetIdentityOfItem(desiredNewPos))
-        {
-        case WALL:
-            snakeAlive = false;
-            break;
-        case APPLE:
-            UnidntifyItem(desiredNewPos);
-            amountSegments++;
-            appleEaten = true;
-            RegenerateApple();
-            break;
-        case SNAKE_BODY:
-            snakeAlive = false;
-            break;
-        }
-        return snakeAlive;
-    }
-    else
-    {
-        return false;
-    }
-}
 
 
 
