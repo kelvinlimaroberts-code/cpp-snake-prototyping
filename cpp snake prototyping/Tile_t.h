@@ -19,7 +19,7 @@ private:
 class Segment_t : public Tile_t
 {
 public:
-	Segment_t();
+	Segment_t() = delete;
 	Segment_t(Segment_t* prevSeg);
 	void SetPos(const short2& newPos);
 	const short2 GetPos() const;

@@ -16,14 +16,14 @@ Snake_t::~Snake_t()
 	mpHead = nullptr;
 }
 
-Snake_t& Snake_t::operator++()
+Snake_t& Snake_t::operator++() //TODO:: FIX ++ OPERATOR
 {
 	Segment_t& tail = GetTail();
 	tail.pNextSegment = new Segment_t(tail);
     return *this;
 }
 
-Snake_t& Snake_t::operator--()
+Snake_t& Snake_t::operator--() //TODO:: FIX -- OPERATOR
 {
 	Segment_t* penultimatePiece = GetTail().pPrevSegment;
 	delete penultimatePiece->pNextSegment;

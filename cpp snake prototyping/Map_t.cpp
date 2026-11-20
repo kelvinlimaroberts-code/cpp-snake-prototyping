@@ -29,5 +29,5 @@ bool& Map_t::AppleEaten()
 
 char Map_t::GetDisplayValueAt(short2 pos)
 {
-    mapGrid[pos.x][pos.y].GetDisplayValue();
+    return mapGrid[pos.x][pos.y].GetDisplayValue();
 }

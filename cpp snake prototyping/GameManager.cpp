@@ -32,6 +32,7 @@ void GameManager_t::Update()
     short2 nextPos = { 0,0 };
     if (player.ValidSnakeMovement(nextPos))
     {
+        FactorCollisions(nextPos);
         player.MoveSnake(nextPos, map);
     }
 }
