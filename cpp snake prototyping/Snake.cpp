@@ -8,7 +8,7 @@ Snake_t::Snake_t()
 
 Snake_t::~Snake_t()
 {
-    while (GetTail().pPrevSegment != nullptr) //check if the segment is the head
+    while (GetTail()->pPrevSegment != nullptr) //check if the segment is the head
     {
         --*this;   //delete everything in linked list
     }
@@ -16,16 +16,17 @@ Snake_t::~Snake_t()
 	mpHead = nullptr;
 }
 
-Snake_t& Snake_t::operator++() //TODO:: FIX ++ OPERATOR
+Snake_t& Snake_t::operator++() 
 {
-	Segment_t& tail = GetTail();
-	tail.pNextSegment = new Segment_t(tail);
+	Segment_t* tail = GetTail();
+	tail->pNextSegment = new Segment_t(tail);
     return *this;
+
 }
 
-Snake_t& Snake_t::operator--() //TODO:: FIX -- OPERATOR
+Snake_t& Snake_t::operator--() 
 {
-	Segment_t* penultimatePiece = GetTail().pPrevSegment;
+	Segment_t* penultimatePiece = GetTail()->pPrevSegment;
 	delete penultimatePiece->pNextSegment;
 	penultimatePiece->pNextSegment = nullptr;
     return *this;
@@ -46,6 +47,7 @@ void Snake_t::MoveSnake(const short2& pos, Map_t& m)
     {
         //update the position of the next one with the previous position of the current selected
         index.pNextSegment->SetPos(index.GetPrevPos());
+        //TODO:: change index
     }
     m.UnidentifyItem(index.GetPrevPos());               //map deregister snake tail tip
 }
@@ -96,13 +98,13 @@ DirectionValue& Snake_t::GetDirection()
     return direction;
 }
 
-Segment_t& Snake_t::GetTail()
+Segment_t* Snake_t::GetTail()
 {
-	Segment_t* pIndex = mpHead; //use this to read/write to list
-	while (pIndex->pNextSegment != nullptr)     //does a segment have no more after it?
-	{
-		pIndex = pIndex->pNextSegment;			//go to next one, if there is one
-	}
-	return *pIndex;								//return refernce to final segment object
+    Segment_t* pIndex = mpHead;                 //use this to read/write to list
+    while (pIndex->pNextSegment != nullptr)     //does a segment have no more after it?
+    {
+        pIndex = pIndex->pNextSegment;			//go to next one, if there is one
+    }
+    return pIndex;								//return pointer to final segment object
 }
 

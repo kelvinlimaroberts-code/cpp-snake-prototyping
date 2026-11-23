@@ -18,7 +18,7 @@ public:
 	Snake_t& operator++();
 	Snake_t& operator--();
 private:
-	Segment_t& GetTail();
+	Segment_t* GetTail();
 	Segment_t* mpHead = nullptr;
 
 	bool snakeAlive = true;
