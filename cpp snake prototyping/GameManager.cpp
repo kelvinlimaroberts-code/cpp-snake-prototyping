@@ -133,6 +133,7 @@ void GameManager_t::FactorCollisions(short2 nextPos)
     case APPLE:
         map.UnidentifyItem(nextPos);
         ++player;
+        player.IncrementScore();
         map.AppleEaten() = true;
         RegenerateApple();
         break;

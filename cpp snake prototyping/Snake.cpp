@@ -42,14 +42,14 @@ void Snake_t::MoveSnake(const short2& pos, Map_t& m)
         m.UnidentifyItem(mpHead->GetPrevPos());         //map deregister previous head position
         m.IdentifyAsItem(SNAKE_BODY, mpHead->GetPrevPos());//map register previous position as snake body
     }
-    Segment_t& index = *mpHead;
-    while (index.pNextSegment != nullptr)               //for the rest of the segments
+    Segment_t* index = mpHead;
+    while (index->pNextSegment != nullptr)               //for the rest of the segments
     {
         //update the position of the next one with the previous position of the current selected
-        index.pNextSegment->SetPos(index.GetPrevPos());
-        //TODO:: change index
+        index->pNextSegment->SetPos(index->GetPrevPos());
+        index = index->pNextSegment;                     //update the index to be pointing at the next element
     }
-    m.UnidentifyItem(index.GetPrevPos());               //map deregister snake tail tip
+    m.UnidentifyItem(index->GetPrevPos());               //map deregister snake tail tip
 }
 
 bool Snake_t::ValidSnakeMovement(short2& desiredNewPos)
@@ -81,6 +81,11 @@ bool Snake_t::ValidSnakeMovement(short2& desiredNewPos)
     {
         return false;
     }
+}
+
+void Snake_t::IncrementScore()
+{
+    score++;
 }
 
 int Snake_t::GetScore()

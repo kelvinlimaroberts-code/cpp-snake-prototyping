@@ -11,6 +11,7 @@ public:
 	~Snake_t();
 	void MoveSnake(const short2& pos, Map_t& m);
 	bool ValidSnakeMovement(short2&);
+	void IncrementScore();
 	int GetScore();
 	bool& HasLife();
 	DirectionValue& GetDirection();
